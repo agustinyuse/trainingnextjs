@@ -1,8 +1,7 @@
-import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import OktaProvider from "next-auth/providers/okta";
 
-export const authOptions = {
-  // Configure one or more authentication providers
+export const authOptions: NextAuthOptions = {
   providers: [
     OktaProvider({
       clientId: process.env.OKTA_CLIENT_ID as string,
@@ -10,7 +9,5 @@ export const authOptions = {
       issuer: process.env.OKTA_ISSUER as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET as string,
 };
-
-export default NextAuth(authOptions);

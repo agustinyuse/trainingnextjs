@@ -8,7 +8,7 @@ import NavbarComponent from "@/components/Navbar/NavbarComponent";
 import dynamic from "next/dynamic";
 
 // Fixes: Hydration failed because the initial UI does not match what was rendered on the server.
-const NextAuthProvider = dynamic(
+const NextAuthProvider: any = dynamic(
   () => import("./providers/nextAuthProvider").then((mod) => mod.default),
   {
     ssr: false,

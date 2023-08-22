@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={clsx("min-h-screen bg-background font-sans antialiased")}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+        <Providers>
           <NextAuthProvider>
             <Suspense>
               <NavbarComponent />

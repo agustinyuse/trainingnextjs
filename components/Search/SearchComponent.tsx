@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createUrl } from "@/lib/utils";
 
@@ -33,7 +33,10 @@ function SearchComponent() {
 
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      <form onSubmit={onSubmit} className="relative w-full lg:w-full xl:w-full">
+      <form
+        onSubmit={onSubmit}
+        className="relative w-full lg:w-full xl:w-full flex items-center"
+      >
         <Input
           type="text"
           name="search"
@@ -42,6 +45,9 @@ function SearchComponent() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
+        <Button className="ml-5" type="submit">
+          Buscar
+        </Button>
       </form>
     </div>
   );

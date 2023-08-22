@@ -11,6 +11,9 @@ import {
   DropdownMenu,
   Avatar,
   Button,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
 } from "@nextui-org/react";
 
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -18,13 +21,28 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default function NavbarComponent() {
   const { data: session, status } = useSession();
 
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [{ name: "Personajes", path: "/characters" }];
+
   return (
-    <Navbar>
-      <NavbarBrand>
-        <p className="font-bold text-inherit">Rick And Morty App</p>
-      </NavbarBrand>
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </NavbarContent>
+
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand>
+          <p className="font-bold text-inherit">Rick And Morty App</p>
+        </NavbarBrand>
+      </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarBrand>
+          <p className="font-bold text-inherit">Rick And Morty App</p>
+        </NavbarBrand>
         <NavbarItem>
           <Link color="foreground" href="/characters">
             Personajes
@@ -34,7 +52,7 @@ export default function NavbarComponent() {
 
       {!(status == "authenticated") ? (
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
+          <NavbarItem>
             <NavbarItem>
               <Button
                 as={Link}
@@ -48,49 +66,35 @@ export default function NavbarComponent() {
           </NavbarItem>
         </NavbarContent>
       ) : (
-        <NavbarContent as="div" justify="end">
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="secondary"
-                name="Jason Hughes"
-                size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">{session?.user?.email}</p>
-              </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="team_settings">Team Settings</DropdownItem>
-              <DropdownItem key="analytics">Analytics</DropdownItem>
-              <DropdownItem key="system">System</DropdownItem>
-              <DropdownItem key="configurations">Configurations</DropdownItem>
-              <DropdownItem key="help_and_feedback">
-                Help & Feedback
-              </DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                <Button
-                  as={Link}
-                  onClick={() =>
-                    signOut({
-                      callbackUrl: `${window.location.origin}`,
-                    })
-                  }
-                  color="danger"
-                >
-                  Log Out
-                </Button>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <NavbarItem>
+              <Button
+                as={Link}
+                onClick={() =>
+                  signOut({
+                    callbackUrl: `${window.location.origin}`,
+                  })
+                }
+                color="danger"
+                variant="flat"
+              >
+                Log Out
+              </Button>
+            </NavbarItem>
+          </NavbarItem>
         </NavbarContent>
       )}
+
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link className="w-full" color="primary" href={item.path} size="lg">
+              {item.name}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }

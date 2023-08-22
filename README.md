@@ -1,8 +1,9 @@
 # Rick And Morty App
 
-Web App para practicar con [Nextjs](https://nextjs.org/) usando la Api de Rick And Morty con autenticación en Okta.
+Web App para practicar con [Nextjs](https://nextjs.org/) usando la [Api de Rick And Morty](https://rickandmortyapi.com/) con autenticación en Okta.
 
 Librería de UI: [NextUI](https://nextui.org/docs/)
+
 Librería de Autenticación: [Next-Auth](https://next-auth.js.org/configuration/nextjs)
 
 ## Getting Started
